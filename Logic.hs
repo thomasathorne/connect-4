@@ -189,9 +189,10 @@ aiPlay = do
  stat <- gets (analyse aiDepth)
  io $ putStrLn $ show stat
  case stat of
-  Win ls -> return $ head ls
-  Unknown ls -> return $ head ls
-  Loss -> return 11
+  Win ls -> io $ takeRandom ls
+  Unknown ls -> io $ takeRandom ls
+  Loss -> do opts <- gets legalPlays
+             io $ takeRandom opts
 
 analyse :: Int -> Game -> Status
 analyse 1 g = flatten $ do
