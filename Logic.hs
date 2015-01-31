@@ -60,6 +60,9 @@ diagonalise n trav app dat = evalState (unCount $ trav step dat) n
         put (m+1)
         return (ix m app arr)
 
+legalPlays :: Game -> [Int]
+legalPlays g = findIndices (== Nothing) $ g^..row size 
+
 -----------------------------
 
 pDisplay :: Game -> IO ()
