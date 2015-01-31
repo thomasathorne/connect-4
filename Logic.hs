@@ -6,6 +6,7 @@ import Control.Lens
 import Control.Lens.TH
 import Control.Monad.State
 import Control.Applicative
+import System.Random
 import Data.Array
 import Data.List
 import Data.Char
@@ -173,6 +174,12 @@ flatten ((n,Unknown _):rest) = case flatten rest of
 flatten ((n,Win _):rest) = case flatten rest of
   Win ls -> Win (n:ls)
   _ -> Win [n]
+
+takeRandom :: [a] -> IO a
+takeRandom [] = undefined
+takeRandom ls = do
+  n <- randomRIO (0, length ls - 1)
+  return $ ls !! n
 
 aiPlay :: StateT Game IO Int
 aiPlay = do
